@@ -3,7 +3,7 @@ import { shopifyApp } from "@shopify/shopify-app-express";
 import { PostgreSQLSessionStorage } from "@shopify/shopify-app-session-storage-postgresql";
 import { restResources } from "@shopify/shopify-api/rest/admin/2023-04";
 
-const DB_PATH = process.env.NODE_ENV === 'production' ? `postgresql://slnfdnkkqpeayv:4dd6a0fee97a4c99711ee57ec5f25551ac29c5042a3495bdd3058b4d110acfb3@ec2-3-232-103-50.compute-1.amazonaws.com:5432/dbi169dduogf4f` : `postgresql://postgres:12345@localhost:5432/postgres`;
+const DB_PATH = process.env.NODE_ENV === 'production' ? `postgres://slnfdnkkqpeayv:4dd6a0fee97a4c99711ee57ec5f25551ac29c5042a3495bdd3058b4d110acfb3@ec2-3-232-103-50.compute-1.amazonaws.com:5432/dbi169dduogf4f` : `postgresql://postgres:12345@localhost:5432/postgres`;
 
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.
 // See the ensureBilling helper to learn more about billing in this template.
