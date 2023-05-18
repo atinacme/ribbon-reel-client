@@ -42,18 +42,26 @@ export default function HomePage() {
   };
   useEffect(() => {
     const ShopData = async () => {
-      fetch("/api/shop")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("sucxg-->", data)
-          dispatch(HomePageAction(data.data[0].shop_owner, data.data[0].name, data.data[0].email, state.homePage.subscription_plan_cost, state.homePage.style_layout));
-        });
+      try {
+        fetch("/api/shop")
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("sucxg-->", data)
+            dispatch(HomePageAction(data.data[0].shop_owner, data.data[0].name, data.data[0].email, state.homePage.subscription_plan_cost, state.homePage.style_layout));
+          });
+      } catch (e) {
+        console.log(e)
+      }
     };
     ShopData();
     const Utils = async () => {
-      fetch("/auth/callback")
-        .then((res) => res.json())
-        .then((data) => { });
+      try {
+        fetch("/auth/callback")
+          .then((res) => res.json())
+          .then((data) => { console.log(data) });
+      } catch (e) {
+        console.log(e)
+      }
     };
     Utils();
   }, []);
