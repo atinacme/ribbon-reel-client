@@ -1,6 +1,6 @@
 import { BillingInterval, LATEST_API_VERSION } from "@shopify/shopify-api";
 import { shopifyApp } from "@shopify/shopify-app-express";
-import { PostgreSQLSessionStorage } from "@shopify/shopify-app-session-storage-postgresql";
+import { setupSessionStorage } from "@shopify/shopify-app-session-storage-postgresql";
 import { restResources } from "@shopify/shopify-api/rest/admin/2023-04";
 import pg from "pg";
 
@@ -41,7 +41,7 @@ const shopify = shopifyApp({
     path: "/api/webhooks",
   },
   // This should be replaced with your preferred storage strategy
-  sessionStorage: new PostgreSQLSessionStorage(pgClient),
+  sessionStorage: setupSessionStorage({ client: pgClient })
 });
 
 export default shopify;
