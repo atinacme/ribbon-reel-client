@@ -15,6 +15,17 @@ const pgClient = new Client({
   password: process.env.NODE_ENV === 'production' ? process.env.PG_PASSWORD : '12345',
   port: process.env.NODE_ENV === 'production' ? process.env.PG_PORT : '5432',
 });
+
+async function setupSessionStorage() {
+  try {
+    await pgClient.connect();
+    console.log('PostgreSQL session storage connected');
+  } catch (error) {
+    console.error('Error connecting to PostgreSQL:', error);
+  }
+}
+
+setupSessionStorage()
 console.log("wds---->", pgClient)
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.
 // See the ensureBilling helper to learn more about billing in this template.
@@ -41,7 +52,7 @@ const shopify = shopifyApp({
     path: "/api/webhooks",
   },
   // This should be replaced with your preferred storage strategy
-  sessionStorage: session.setupSessionStorage({ client: pgClient })
+  // sessionStorage: session.setupSessionStorage({ client: pgClient })
 });
 
 export default shopify;
