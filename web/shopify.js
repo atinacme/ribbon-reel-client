@@ -57,7 +57,7 @@ const shopify = shopifyApp({
   },
   // This should be replaced with your preferred storage strategy
   sessionStorage: new PostgreSQLSessionStorage(
-    new URL(process.env.NODE_ENV === 'production' ? `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}` : `postgresql://postgres:12345@localhost:5432/postgres`),
+    new URL(`postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}`),
   ),
   // sessionStorage: session.setupSessionStorage({ client: pgClient })
 });
