@@ -6,7 +6,7 @@ import { restResources } from "@shopify/shopify-api/rest/admin/2023-04";
 
 // const { Client } = pg;
 
-// const DB_PATH = process.env.NODE_ENV === 'production' ? `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}` : `postgresql://postgres:12345@localhost:5432/postgres`;
+const DB_PATH = `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}`;
 
 // const pgClient = new Client({
 //   user: process.env.NODE_ENV === 'production' ? process.env.PG_USER : 'postgres',
@@ -56,9 +56,10 @@ const shopify = shopifyApp({
     path: "/api/webhooks",
   },
   // This should be replaced with your preferred storage strategy
-  sessionStorage: new PostgreSQLSessionStorage(
-    new URL(`postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}`),
-  ),
+  sessionStorage: new PostgreSQLSessionStorage(DB_PATH),
+  // sessionStorage: new PostgreSQLSessionStorage(
+  //   new URL(`postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}`),
+  // ),
   // sessionStorage: session.setupSessionStorage({ client: pgClient })
 });
 
