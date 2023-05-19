@@ -2,9 +2,18 @@ import { BillingInterval, LATEST_API_VERSION } from "@shopify/shopify-api";
 import { shopifyApp } from "@shopify/shopify-app-express";
 import { PostgreSQLSessionStorage } from "@shopify/shopify-app-session-storage-postgresql";
 import { restResources } from "@shopify/shopify-api/rest/admin/2023-04";
+import { Client } from "pg";
 
-const DB_PATH = process.env.NODE_ENV === 'production' ? `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}` : `postgresql://postgres:12345@localhost:5432/postgres`;
-console.log("wds---->", DB_PATH)
+// const DB_PATH = process.env.NODE_ENV === 'production' ? `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}` : `postgresql://postgres:12345@localhost:5432/postgres`;
+
+const pgClient = new Client({
+  user: process.env.NODE_ENV === 'production' ? process.env.PG_USER : 'postgres',
+  host: process.env.NODE_ENV === 'production' ? process.env.PG_HOST : 'localhost',
+  database: process.env.NODE_ENV === 'production' ? process.env.PG_DATABASE : 'postgres',
+  password: process.env.NODE_ENV === 'production' ? process.env.PG_PASSWORD : '12345',
+  port: process.env.NODE_ENV === 'production' ? process.env.PG_PORT : '5432',
+});
+console.log("wds---->", pgClient)
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.
 // See the ensureBilling helper to learn more about billing in this template.
 const billingConfig = {
@@ -30,7 +39,7 @@ const shopify = shopifyApp({
     path: "/api/webhooks",
   },
   // This should be replaced with your preferred storage strategy
-  sessionStorage: new PostgreSQLSessionStorage(DB_PATH),
+  sessionStorage: new PostgreSQLSessionStorage(pgClient),
 });
 
 export default shopify;
