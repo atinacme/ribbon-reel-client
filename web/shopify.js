@@ -6,7 +6,7 @@ import { restResources } from "@shopify/shopify-api/rest/admin/2023-04";
 
 // const { Client } = pg;
 
-const DB_PATH = `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}`;
+const DB_PATH = `postgres://slnfdnkkqpeayv:4dd6a0fee97a4c99711ee57ec5f25551ac29c5042a3495bdd3058b4d110acfb3@ec2-3-232-103-50.compute-1.amazonaws.com/dbi169dduogf4f`;
 
 // const pgClient = new Client({
 //   user: process.env.NODE_ENV === 'production' ? process.env.PG_USER : 'postgres',
