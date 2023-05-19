@@ -14,6 +14,10 @@ const pgClient = new Client({
   database: process.env.NODE_ENV === 'production' ? process.env.PG_DATABASE : 'postgres',
   password: process.env.NODE_ENV === 'production' ? process.env.PG_PASSWORD : '12345',
   port: process.env.NODE_ENV === 'production' ? process.env.PG_PORT : '5432',
+  ssl: {
+    require: false,
+    rejectUnauthorized: false
+  }
 });
 pgClient.connect()
 // async function setupSessionStorage() {
