@@ -56,7 +56,9 @@ const shopify = shopifyApp({
     path: "/api/webhooks",
   },
   // This should be replaced with your preferred storage strategy
-  sessionStorage: new PostgreSQLSessionStorage(DB_PATH)
+  sessionStorage: new PostgreSQLSessionStorage(
+    new URL(process.env.NODE_ENV === 'production' ? `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}/${process.env.PG_DATABASE}` : `postgresql://postgres:12345@localhost:5432/postgres`),
+  ),
   // sessionStorage: session.setupSessionStorage({ client: pgClient })
 });
 
